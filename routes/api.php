@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VoirController;
@@ -16,6 +18,7 @@ use App\Http\Controllers\ProfileDePlusInfoController;
 use App\Http\Controllers\DetailsMissionManagerController;
 use App\Http\Controllers\InscriptionNouvelUserController;
 use App\Http\Controllers\InscriptionRemplacantController;
+use App\Http\Controllers\AuthLoginController;
 
 
 /*
@@ -31,9 +34,6 @@ use App\Http\Controllers\InscriptionRemplacantController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-
-
-
 
 });
 
@@ -51,6 +51,17 @@ Route::get('/remplacants/{id}', [InscriptionRemplacantController::class,'show'])
 Route::post('/remplacants', [InscriptionRemplacantController::class,'store']);
 Route::put('/remplacants/{id}', [InscriptionRemplacantController::class,'update']);
 Route::delete('/remplacants/{id}', [InscriptionRemplacantController::class,'destroy']);
+
+
+//Route pour la connexion
+
+// Route::post('/login', 'AuthLoginController@login');
+// Route::group(['middleware' => 'cors'], function () {
+
+// Route::post('/login', [AuthLoginController::class, 'login']);
+// });
+// Route::post('/login', 'AuthController@login');
+Route::post('/login', [AuthLoginController::class, 'login']);
 
 
 // Routes pour Mission
@@ -175,5 +186,5 @@ Route::delete('/plus-infos/{id}', [PlusInfosController::class, 'destroy']); // S
 Route::get('/profiles-de-plus-infos', [ProfileDePlusInfoController::class, 'index']);
 Route::get('/profiles-de-plus-infos/{id}', [ProfileDePlusInfoController::class, 'show']);
 Route::post('/profiles-de-plus-infos', [ProfileDePlusInfoController::class, 'store']);
-Route::put('/profiles-de-plus-infos/{id}', [ProfileDePlusInfoConstroller::class, 'update']);
+Route::put('/profiles-de-plus-infos/{id}', [ProfileDePlusInfoController::class, 'update']);
 Route::delete('/profiles-de-plus-infos/{id}', [ProfileDePlusInfoController::class, 'destroy']);

@@ -40,7 +40,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'inscription' => [
+            'driver' => 'session',
+            'provider' => 'inscription_nouvelusers',
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -62,8 +68,14 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\InscriptionNouvelUser::class,
         ],
+
+        'inscription' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\InscriptionNouvelUser::class,
+        ],
+
 
         // 'users' => [
         //     'driver' => 'database',

@@ -2,67 +2,72 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\InscriptionNouvelUser;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Hash;
 
 class InscriptionNouvelUserController extends Controller
+
 {
-    // Méthode pour afficher la liste des utilisateurs
     public function index()
     {
         $utilisateurs = InscriptionNouvelUser::all();
         return response()->json($utilisateurs);
     }
 
-    // Méthode pour afficher un utilisateur par son ID
     public function show($id)
     {
         $utilisateur = InscriptionNouvelUser::findOrFail($id);
         return response()->json($utilisateur);
     }
 
-    // Méthode pour créer un nouvel utilisateur
     public function store(Request $request)
     {
-        // Valider les données d'entrée
         $validator = Validator::make($request->all(), [
             'Prenom' => 'required|string',
             'Nom' => 'required|string',
             'N° Telephone' => 'required|string',
-            'Email' => 'required|email|unique:inscription_nouvelusers', // Assurez-vous que l'email est unique dans la table "inscription_nouvelusers"
+            'Email' => 'required|email|unique:inscription_nouvelusers',
             'Code Structure' => 'required|string',
             'Mot de passe' => 'required|string',
-            'Confirmer mot de passe' => 'required|string|same:Mot de passe', // Assurez-vous que le champ "Confirmer mot de passe" correspond au champ "Mot de passe"
+            'Confirmer mot de passe' => 'required|string|same:Mot de passe',
         ]);
 
-        // Si la validation échoue, renvoyer une réponse d'erreur
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        // Créer un nouvel utilisateur si la validation réussit
-        $utilisateur = InscriptionNouvelUser::create($request->all());
+        // Hachez le mot de passe ici
+        $password = Hash::make($request->input('Mot de passe'));
+
+        // Créez un nouvel utilisateur avec le mot de passe haché
+        $utilisateur = InscriptionNouvelUser::create([
+            'Prenom' => $request->input('Prenom'),
+            'Nom' => $request->input('Nom'),
+            'N° Telephone' => $request->input('N° Telephone'),
+            'Email' => $request->input('Email'),
+            'Code Structure' => $request->input('Code Structure'),
+            'Mot de passe' => $password,
+            'Confirmer mot de passe' => $request->input('Confirmer mot de passe'),
+        ]);
 
         return response()->json($utilisateur, 201);
     }
 
-    // Méthode pour mettre à jour un utilisateur
     public function update(Request $request, $id)
     {
-         // Valider les données d'entrée
-         $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'Prenom' => 'required|string',
             'Nom' => 'required|string',
             'N° Telephone' => 'required|string',
-            'Email' => 'required|email|unique:inscription_nouvelusers,email,' . $id, // Assurez-vous que l'email est unique, sauf pour l'utilisateur en cours d'édition
+            'Email' => 'required|email|unique:inscription_nouvelusers,email,' . $id,
             'Code Structure' => 'required|string',
             'Mot de passe' => 'required|string',
-            'Confirmer mot de passe' => 'required|string|same:Mot de passe', // Assurez-vous que le champ "Confirmer mot de passe" correspond au champ "Mot de passe"
+            'Confirmer mot de passe' => 'required|string|same:Mot de passe',
         ]);
 
-        // Si la validation échoue, renvoyer une réponse d'erreur
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
@@ -73,7 +78,6 @@ class InscriptionNouvelUserController extends Controller
         return response()->json($utilisateur, 200);
     }
 
-    // Méthode pour supprimer un utilisateur
     public function destroy($id)
     {
         $utilisateur = InscriptionNouvelUser::findOrFail($id);
