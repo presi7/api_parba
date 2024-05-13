@@ -15,25 +15,26 @@ class CreateCreerMissionsTable extends Migration
     {
         Schema::create('creer_missions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('missions_manager_id');
-            $table->string('Type');
-            $table->string('Structure');
-            $table->string('Service');
-            $table->date('Debut');
-            $table->date('Fin');
-            $table->time('Heure_de_Debut');
-            $table->time('Heure_de_Fin');
-            $table->string('Profil');
-            $table->string('Motif');
-            $table->string('Nom_de_la_personne_a_remplacer');
-            $table->string('Prenom_de_la_personne_a_remplacer');
+            $table->unsignedBigInteger('missions_manager_id')->default(1); // Remplacez 1 par la valeur par défaut souhaitée
+            $table->string('type');
+            $table->string('structure');
+            $table->string('service');
+            $table->date('debut');
+            $table->date('fin');
+            $table->time('heure_debut');
+            $table->time('heure_fin');
+            $table->string('profil');
+            $table->string('motif');
+            $table->string('nom_de_la_personne_a_remplacer');
+            $table->string('prenom_de_la_personne_a_remplacer');
             $table->timestamps();
 
+
             // Ajoutez la définition de la clé étrangère
-            $table->foreign('missions_manager_id')
-            ->references('id')
-            ->on('missions_managers')
-            ->onDelete('cascade'); // Vous pouvez spécifier onDelete comme nécessaire
+            // $table->foreign('missions_manager_id')->nullable()->unsigned()
+            // ->references('id')
+            // ->on('missions_managers')
+            // ->onDelete('cascade'); // Vous pouvez spécifier onDelete comme nécessaire
         });
     }
 

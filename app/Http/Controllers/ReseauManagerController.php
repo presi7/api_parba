@@ -18,10 +18,11 @@ class ReseauManagerController extends Controller
     {
         // Validez les données du formulaire ici
         $validator = Validator::make($request->all(), [
-            'nom' => 'required',
-            'prenom' => 'required',
-            'fonction' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nom_de_la_personne_a_remplacer' => 'required',
+            'prenom_de_la_personne_a_remplacer' => 'required',
+            'service' => 'required',
+            'horaire' => 'required',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -30,9 +31,10 @@ class ReseauManagerController extends Controller
 
         // Créez un nouveau gestionnaire de réseau
         $reseau = new ReseauManager([
-            'nom' => $request->nom,
-            'prenom' => $request->prenom,
-            'fonction' => $request->fonction,
+            'nom_de_la_personne_a_remplacer' => $request->nom_de_la_personne_a_remplacer,
+            'prenom_de_la_personne_a_remplacer' => $request->prenom_de_la_personne_a_remplacer,
+            'service' => $request->service,
+            'horaire' => $request->horaire,
         ]);
 
         // Gérez le téléchargement de l'image si fournie
@@ -56,10 +58,11 @@ class ReseauManagerController extends Controller
     {
         // Validez les données du formulaire ici
         $validator = Validator::make($request->all(), [
-            'nom' => 'required',
-            'prenom' => 'required',
-            'fonction' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nom_de_la_personne_a_remplacer' => 'required',
+            'prenom_de_la_personne_a_remplacer' => 'required',
+            'service' => 'required',
+            'horaire' => 'required',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -69,15 +72,16 @@ class ReseauManagerController extends Controller
         $reseau = ReseauManager::findOrFail($id);
 
         // Mettez à jour les données du gestionnaire de réseau
-        $reseau->nom = $request->nom;
-        $reseau->prenom = $request->prenom;
-        $reseau->fonction = $request->fonction;
+        $reseau->nom_de_la_personne_a_remplacer = $request->nom_de_la_personne_a_remplacer;
+        $reseau->prenom_de_la_personne_a_remplacer = $request->prenom_de_la_personne_a_remplacer;
+        $reseau->service = $request->service;
+        $reseau->horaire = $request->horaire;
 
         // Gérez la mise à jour de l'image si fournie
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/reseaux', 'public');
-            $reseau->image = $imagePath;
-        }
+        // if ($request->hasFile('image')) {
+        //     $imagePath = $request->file('image')->store('images/reseaux', 'public');
+        //     $reseau->image = $imagePath;
+        // }
 
         $reseau->save();
 

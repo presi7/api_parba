@@ -10,18 +10,18 @@ class CreerMission extends Model
     use HasFactory;
 
     protected $fillable = [
-        'Type',
-        'Structure',
-        'Service',
-        'Debut',
-        'Fin',
-        'Heure_de_Debut',
-        'Heure_de_Fin',
-        'Profil',
-        'Motif',
-        'Nom_de_la_personne_a_remplacer',
-        'Prenom_de_la_personne_a_remplacer',
-
+        'type',
+        'structure',
+        'service',
+        'debut',
+        'fin',
+        'heure_debut',
+        'heure_fin',
+        'profil',
+        'motif',
+        'nom_de_la_personne_a_remplacer',
+        'prenom_de_la_personne_a_remplacer',
+        'missions_manager_id', // Ajoutez la clé étrangère
     ];
 
     public function missionsManager()

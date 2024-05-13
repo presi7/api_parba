@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReseauManagersTable extends Migration
+class CreateAdminTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateReseauManagersTable extends Migration
      */
     public function up()
     {
-        Schema::create('reseau_managers', function (Blueprint $table) {
+        Schema::create('admin_tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_de_la_personne_a_remplacer');
-            $table->string('prenom_de_la_personne_a_remplacer');
-            $table->string('service');
-            $table->string('horaire');
-            $table->string('image')->nullable();
+            $table->string('token')->unique();
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateReseauManagersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reseau_managers');
+        Schema::dropIfExists('admin_tokens');
     }
 }

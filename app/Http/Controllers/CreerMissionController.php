@@ -19,18 +19,17 @@ class CreerMissionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'Type' => 'required',
-            'Structure' => 'required',
-            'Service' => 'required',
-            'Debut' => 'required|date',
-            'Fin' => 'required|date',
-            'Heure_de_Debut' => 'required',
-            'Heure_de_Fin' => 'required',
-            'Profil' => 'required',
-            'Motif' => 'required',
-            'Nom_de_la_personne_a_remplacer' => 'required',
-            'Prenom_de_la_personne_a_remplacer' => 'required',
-            // Ajoutez d'autres règles de validation si nécessaire
+            'type' => 'required',
+            'structure' => 'required',
+            'service' => 'required',
+            'debut' => 'required|date',
+            'fin' => 'required|date',
+            'heure_debut' => 'required',
+            'heure_fin' => 'required',
+            'profil' => 'required',
+            'motif' => 'required',
+            'nom_de_la_personne_a_remplacer' => 'required',
+            'prenom_de_la_personne_a_remplacer' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +37,8 @@ class CreerMissionController extends Controller
         }
 
         $mission = CreerMission::create($request->all());
-        return response()->json($mission, 201);
+
+        return response()->json(['data' => $mission], 201);
     }
 
     // Méthode pour afficher les détails d'une mission créée
@@ -54,18 +54,18 @@ class CreerMissionController extends Controller
         $mission = CreerMission::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'Type' => 'required',
-            'Structure' => 'required',
-            'Service' => 'required',
-            'Debut' => 'required|date',
-            'Fin' => 'required|date',
-            'Heure_de_Debut' => 'required',
-            'Heure_de_Fin' => 'required',
-            'Profil' => 'required',
-            'Motif' => 'required',
-            'Nom_de_la_personne_a_remplacer' => 'required',
-            'Prenom_de_la_personne_a_remplacer' => 'required',
-            // Ajoutez d'autres règles de validation si nécessaire
+            'type' => 'required',
+            'structure' => 'required',
+            'service' => 'required',
+            'debut' => 'required|date',
+            'fin' => 'required|date',
+            'heure_debut' => 'required',
+            'heure_fin' => 'required',
+            'profil' => 'required',
+            'motif' => 'required',
+            'nom_de_la_personne_a_remplacer' => 'required',
+            'prenom_de_la_personne_a_remplacer' => 'required',
+            // 'missions_manager_id'=> 'required',
         ]);
 
         if ($validator->fails()) {

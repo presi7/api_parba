@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ use App\Http\Controllers\DetailsMissionManagerController;
 use App\Http\Controllers\InscriptionNouvelUserController;
 use App\Http\Controllers\InscriptionRemplacantController;
 use App\Http\Controllers\AuthLoginController;
+use App\Http\Controllers\AuthController;
 
 
 /*
@@ -60,8 +62,22 @@ Route::delete('/remplacants/{id}', [InscriptionRemplacantController::class,'dest
 
 // Route::post('/login', [AuthLoginController::class, 'login']);
 // });
-// Route::post('/login', 'AuthController@login');
-Route::post('/login', [AuthLoginController::class, 'login']);
+
+// Route pour l'enregistrement d'un nouvel utilisateur
+Route::post('/register', [AuthController::class, 'register']);
+
+// Route pour la connexion
+// Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->withoutMiddleware(['auth:api']);
+
+// Route pour la déconnexion
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
+
+// Route pour récupérer les informations de l'utilisateur authentifié
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:api');
+
 
 
 // Routes pour Mission
@@ -165,7 +181,6 @@ Route::prefix('details-missions')->group(function () {
 });
 
 
-
 // Routes pour la gestion des gestionnaires de réseaux
 Route::get('/reseaux-managers', [ReseauManagerController::class, 'index']);
 Route::post('/reseaux-managers', [ReseauManagerController::class, 'store']);
@@ -188,3 +203,17 @@ Route::get('/profiles-de-plus-infos/{id}', [ProfileDePlusInfoController::class, 
 Route::post('/profiles-de-plus-infos', [ProfileDePlusInfoController::class, 'store']);
 Route::put('/profiles-de-plus-infos/{id}', [ProfileDePlusInfoController::class, 'update']);
 Route::delete('/profiles-de-plus-infos/{id}', [ProfileDePlusInfoController::class, 'destroy']);
+
+
+// Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+//     Route::post('/create-manager-account', [ManagerController::class, 'createAccount']);
+// });
+Route::post('/create-manager-account', [ManagerController::class, 'createAccount']);
+
+
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', 'AdminController@dashboard');
+});
+
+
+

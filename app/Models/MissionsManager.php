@@ -23,10 +23,10 @@ class MissionsManager extends Model
     ];
 
     // Relation avec CreerMission
-    public function creerUneMission()
-    {
-        return $this->hasOne(CreerMission::class, 'missions_manager_id');
-    }
+    // public function creerUneMission()
+    // {
+    //     return $this->hasOne(CreerMission::class, 'missions_manager_id');
+    // }
 
     // Relation avec DeclarerMission
     public function declarerUneMission()

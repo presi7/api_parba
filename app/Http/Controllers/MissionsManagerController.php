@@ -45,7 +45,15 @@ class MissionsManagerController extends Controller
         }
 
         $missionsManager = MissionsManager::create($request->all());
-        return response()->json(['message' => 'Mission Manager créée avec succès'], 201);
+
+        return response()->json(['data' => $missionsManager], 201);
+        
+        // if ($validator->fails()) {
+        //     return response()->json(['error' => $validator->errors()], 400);
+        // }
+
+        // $missionsManager = MissionsManager::create($request->all());
+        // return response()->json(['message' => 'Mission Manager créée avec succès'], 201);
     }
 
     // Méthode pour mettre à jour une mission manager
